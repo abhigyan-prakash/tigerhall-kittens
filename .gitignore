@@ -1,0 +1,23 @@
+# files
+._*
+ava.config.local.*
+*.code-workspace
+!creds.sample.yaml
+creds*.yaml
+.DS_Store
+.eslintcache
+.node_repl_history
+packaged.yaml
+.prettierrc
+.project
+
+# directories
+.dockerconf/
+fargateconf/*/archived/
+.idea/
+newrelic_agent.log
+nodejs/coverage/
+nodejs/reports/
+node_modules/
+.npm/
+.vscode/
