@@ -1,4 +1,4 @@
-import { UUID_EMPTY } from '../defines';
+import { UUID_EMPTY } from './defines';
 import CallContext from './call_context';
 
 export default function CallContextStatic() {

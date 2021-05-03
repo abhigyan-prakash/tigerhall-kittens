@@ -1,1 +1,3 @@
 export const UUID_EMPTY = '00000000-0000-0000-0000-000000000000';
+
+export const HEADER_CORRELATIONID = 'X-CorrelationId';

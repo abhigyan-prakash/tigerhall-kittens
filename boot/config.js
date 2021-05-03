@@ -38,6 +38,10 @@ export async function parseConfig(context, currentEnv) {
   return config;
 }
 
+export function getConfig(key) {
+  return _.get(config, key);
+}
+
 async function exists(path) {
   try {
     await fs.promises.access(path);
