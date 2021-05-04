@@ -1,4 +1,4 @@
-import { tigerIds } from '../tiger_unique_ids';
+import { tigerIds } from '../tiger_ids';
 import faker from 'faker';
 
 export function seed(knex) {
@@ -6,9 +6,11 @@ export function seed(knex) {
     .del()
     .then(() => {
       let rows = [];
-      for (let id of tigerIds) {
+
+      for (let i = 0; i < tigerIds.length; i++) {
         rows.push({
-          id,
+          id: tigerIds[i].id,
+          sighting_id: tigerIds[i].sightingId,
           name: faker.name.firstName(),
           date_of_birth: faker.date.between('2015-01-01', '2021-01-01')
         });

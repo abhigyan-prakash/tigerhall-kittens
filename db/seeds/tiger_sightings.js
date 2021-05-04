@@ -1,4 +1,4 @@
-import { tigerIds } from '../tiger_unique_ids';
+import { tigerIds } from '../tiger_ids';
 import faker from 'faker';
 
 export function seed(knex) {
@@ -6,12 +6,11 @@ export function seed(knex) {
     .del()
     .then(() => {
       let rows = [];
-      let questionMarks = '';
-      let values = [];
 
-      for (let id of tigerIds) {
+      for (let i = 0; i < tigerIds.length; i++) {
         rows.push({
-          tiger_id: id,
+          id: tigerIds[i].sightingId,
+          tiger_id: tigerIds[i].id,
           last_seen_at: faker.date.recent(),
           last_seen: knex.raw('POINT(?, ?)', [
             faker.address.longitude(),

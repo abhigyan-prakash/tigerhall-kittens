@@ -3,7 +3,7 @@ import CallContextStatic from './call_context_static';
 import { parseConfig, getConfig } from './config';
 import { createRequestContext, handle404 } from './middlewares';
 import router from '../routes';
-import knex from './knex';
+import KnexConnector from './knex_connector';
 import _ from 'lodash';
 
 let staticContext = null;
@@ -24,7 +24,7 @@ export async function boot(options) {
 
   if (options.initDb) {
     // Initiate db connection
-    await knex(staticContext, currentEnv);
+    KnexConnector(staticContext, currentEnv);
   }
 
   if (options.initExpress) {
