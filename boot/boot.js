@@ -3,6 +3,7 @@ import CallContextStatic from './call_context_static';
 import { parseConfig, getConfig } from './config';
 import { createRequestContext, handle404 } from './middlewares';
 import router from '../routes';
+import knex from './knex';
 
 let staticContext = null;
 
@@ -12,6 +13,9 @@ export async function boot() {
   let currentEnv = (process.env.ENV || 'develop').toLowerCase();
 
   let config = await parseConfig(staticContext, currentEnv);
+
+  // Initiate db connection
+  await knex(staticContext);
 
   let app = express();
 

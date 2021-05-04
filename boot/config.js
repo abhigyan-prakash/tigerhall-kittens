@@ -35,6 +35,30 @@ export async function parseConfig(context, currentEnv) {
     throw new Error('No configs loaded.');
   }
 
+  let credsPath = path.join(__dirname, '../', 'creds.yaml');
+  if (await exists(credsPath)) {
+    let creds;
+    try {
+      creds = YAML.parse(fs.readFileSync(credsPath, 'utf8'));
+    } catch (err) {
+      context.logger(err, 'Creds could not be parsed');
+    }
+
+    if (!_.isEmpty(creds)) {
+      const assignCred = function (obj) {
+        for (const [key, val] of Object.entries(obj)) {
+          if (val === 'creds') {
+            obj[key] = creds[key];
+          } else if (val && typeof val === 'object') {
+            assignCred(val);
+          }
+        }
+      };
+
+      assignCred(config);
+    }
+  }
+
   return config;
 }
 

@@ -1,18 +1,10 @@
 db:
-  instances:
-  - client: mysql2
-    creds_key: 002
-    host: gamestore-rds.${environment.prefix.domain}storms.com
-    database: user
-    timezone: Z
-    read: false
-
-  - client: mysql2
-    creds_key: 002
-    host: gamestore-rds-ro.${environment.prefix.domain}storms.com
-    database: user
-    timezone: Z
-    write: false
+  client: mysql2
+  user: creds
+  password: creds
+  host: creds
+  database: tiger
+  timezone: Z
 
 listen:
   http:
