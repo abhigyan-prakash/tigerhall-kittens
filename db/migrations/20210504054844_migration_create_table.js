@@ -8,12 +8,7 @@ export function up(knex) {
       table.timestamp('updated_at').defaultTo(knex.fn.now());
     })
     .createTable('tiger_sightings', table => {
-      table
-        .uuid('tiger_id')
-        .notNullable()
-        .references('id')
-        .inTable('tigers')
-        .onDelete('CASCADE');
+      table.uuid('tiger_id').notNullable();
       table.timestamp('last_seen_at').defaultTo(knex.fn.now());
       table.specificType('last_seen', 'Point');
       table.string('image', 1000).nullable();

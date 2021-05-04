@@ -2,7 +2,7 @@ import { getConfig } from './config';
 import _ from 'lodash';
 import path from 'path';
 
-export default function dbOptions() {
+export default function dbOptions(currentEnv) {
   const dbConfig = getConfig('db');
   const cOptions = _.pick(dbConfig, [
     'host',
@@ -18,11 +18,16 @@ export default function dbOptions() {
     connection: cOptions,
     migrations: {
       directory: path.join(__dirname, '../', '/db/migrations')
-    },
-    seeds: {
-      directory: path.join(__dirname, '../', '/db/seeds')
     }
   };
+
+  if (currentEnv === 'develop') {
+    kOptions = Object.assign(kOptions, {
+      seeds: {
+        directory: path.join(__dirname, '../', '/db/seeds')
+      }
+    });
+  }
 
   return kOptions;
 }

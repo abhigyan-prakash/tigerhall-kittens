@@ -24,7 +24,7 @@ export async function boot(options) {
 
   if (options.initDb) {
     // Initiate db connection
-    await knex(staticContext);
+    await knex(staticContext, currentEnv);
   }
 
   if (options.initExpress) {

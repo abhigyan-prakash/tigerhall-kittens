@@ -5,9 +5,9 @@ let knexConfig = (async function () {
   await boot({});
 
   return {
-    development: dbOptions(),
-    staging: dbOptions(),
-    production: dbOptions()
+    development: dbOptions('develop'),
+    staging: dbOptions('staging'),
+    production: dbOptions('prod')
   };
 })();
 
