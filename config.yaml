@@ -3,7 +3,7 @@ db:
   user: creds
   password: creds
   host: creds
-  database: tiger
+  database: tigers
   timezone: Z
 
 listen:
