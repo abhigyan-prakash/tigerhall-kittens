@@ -10,7 +10,8 @@ export async function fetchAllTigers(context, lastSeen = 'desc') {
     tigers = await knex
       .select()
       .from('tigers')
-      .join('tiger_sightings', 'tigers.sighting_id', 'tiger_sightings.id');
+      .join('tiger_sightings', 'tigers.sighting_id', 'tiger_sightings.id')
+      .orderBy('seen_at', lastSeen);
   } catch (err) {
     context.logger.error(err, 'Could not fetch tigers');
     throw err;
