@@ -1,6 +1,14 @@
 import CallContext from '../../boot/call_context';
-import { getTigerList, getTigerSightingsById } from '../../logic/tiger';
-import { fetchAllTigers, fetchTigerSightings } from '../../models/tiger';
+import {
+  getTigerList,
+  getTigerSightingsById,
+  getTigerByName
+} from '../../logic/tiger';
+import {
+  fetchAllTigers,
+  fetchTiger,
+  fetchTigerSightings
+} from '../../models/tiger';
 
 jest.mock('../../models/tiger');
 
@@ -127,6 +135,11 @@ describe('logic - tiger', () => {
       ]);
     });
 
+    test('get tiger sighting - no tiger id provided', async () => {
+      let result = await getTigerSightingsById(testContext);
+      expect(result).toEqual(null);
+    });
+
     test('get tiger sighting - no sightings', async () => {
       fetchTigerSightings.mockImplementation(() => []);
 
@@ -141,6 +154,34 @@ describe('logic - tiger', () => {
 
       try {
         let result = await getTigerSightingsById(testContext, mockTigerId);
+      } catch (err) {
+        expect(err).toBeDefined();
+      }
+    });
+  });
+
+  describe('test fetchTigerByName', () => {
+    let mockTigerName = 'mock tiger name';
+
+    test('get tiger - no tiger name provided', async () => {
+      let result = await getTigerByName(testContext);
+      expect(result).toEqual(null);
+    });
+
+    test('get tiger - no tiger info', async () => {
+      fetchTiger.mockImplementation(() => {});
+
+      let result = await getTigerByName(testContext, mockTigerName);
+      expect(result).toEqual(null);
+    });
+
+    test('get tiger - throws error', async () => {
+      fetchTiger.mockImplementation(() => {
+        throw new Error('mock error');
+      });
+
+      try {
+        let result = await getTigerByName(testContext, mockTigerName);
       } catch (err) {
         expect(err).toBeDefined();
       }

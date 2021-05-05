@@ -38,3 +38,23 @@ export async function fetchTigerSightings(context, tigerId) {
 
   return sightings;
 }
+
+export async function fetchTiger(name) {
+  const knex = await KnexConnector(context);
+
+  let tiger;
+  try {
+    tiger = await knex.select().from('tigers').where('name', name);
+  } catch (err) {
+    context.logger.error(err, 'Error fetching the tiger');
+    throw err;
+  }
+
+  return tiger;
+}
+
+export async function addTiger(context, tigerData = {}) {
+  const knex = await KnexConnector(context);
+
+  context.logger.debug('Adding a new tiger');
+}

@@ -1,4 +1,8 @@
-import { fetchAllTigers, fetchTigerSightings } from '../models/tiger';
+import {
+  fetchAllTigers,
+  fetchTiger,
+  fetchTigerSightings
+} from '../models/tiger';
 import _ from 'lodash';
 
 export async function getTigerList(context) {
@@ -26,6 +30,7 @@ export async function getTigerList(context) {
 
 export async function getTigerSightingsById(context, tigerId) {
   if (_.isNil(tigerId)) {
+    context.logger.debug('No tiger id provided');
     return null;
   }
 
@@ -45,4 +50,22 @@ export async function getTigerSightingsById(context, tigerId) {
   }
 
   return sightingList;
+}
+
+export async function getTigerByName(name) {
+  if (_.isEmpty(name)) {
+    context.logger.debug('No tiger name provided');
+    return null;
+  }
+
+  let tiger = await fetchTiger(name);
+  if (!_.isEmpty(tiger)) {
+    return {
+      id: tiger.id,
+      name: tiger.name,
+      dateOfBirth: tiger.dateOfBirth
+    };
+  }
+
+  return null;
 }
