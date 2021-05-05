@@ -16,3 +16,6 @@ upload:
   image:
     dir: /public/image
     path: /image
+
+sighting:
+  radius_in_km: 5

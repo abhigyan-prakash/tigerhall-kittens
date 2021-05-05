@@ -47,7 +47,7 @@ export async function fetchTiger(context, name) {
 
   let tiger;
   try {
-    tiger = await knex.select().from('tigers').where('name', name);
+    tiger = await knex.select().from('tigers').where('name', name).first();
   } catch (err) {
     context.logger.error(err, 'Error fetching the tiger');
     throw err;
@@ -63,7 +63,7 @@ export async function fetchTigerById(context, id) {
 
   let tiger;
   try {
-    tiger = await knex.select().from('tigers').where('id', id);
+    tiger = await knex.select().from('tigers').where('id', id).first();
   } catch (err) {
     context.logger.error(err, 'Error fetching the tiger');
     throw err;

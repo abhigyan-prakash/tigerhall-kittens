@@ -177,12 +177,12 @@ export async function validateSightCords(context, tigerId, sightCords, radius) {
     if (
       headingDistanceTo(
         {
-          lat: sightCords.lat,
-          lon: sightCords.lng
+          lat: parseFloat(sightCords.lat),
+          lon: parseFloat(sightCords.lng)
         },
         {
-          lat: sighting.seen_cord_lat,
-          lon: sighting.seen_cord_lng
+          lat: parseFloat(sighting.seen_cord_lat),
+          lon: parseFloat(sighting.seen_cord_lng)
         }
       ) <= radius
     ) {
