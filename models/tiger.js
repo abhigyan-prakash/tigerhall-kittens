@@ -56,6 +56,22 @@ export async function fetchTiger(context, name) {
   return tiger;
 }
 
+export async function fetchTigerById(context, id) {
+  const knex = await KnexConnector(context);
+
+  context.logger.debug(`Fetching tiger by id: ${id}`);
+
+  let tiger;
+  try {
+    tiger = await knex.select().from('tigers').where('id', id);
+  } catch (err) {
+    context.logger.error(err, 'Error fetching the tiger');
+    throw err;
+  }
+
+  return tiger;
+}
+
 export async function addTiger(context, tigerData = {}) {
   const knex = await KnexConnector(context);
 
@@ -65,6 +81,25 @@ export async function addTiger(context, tigerData = {}) {
     knex.transaction(async trx => {
       await knex('tigers').insert(tigerData.tiger).transacting(trx);
       await knex('tiger_sightings').insert(tigerData.sighting).transacting(trx);
+    });
+  } catch (err) {
+    context.logger.error(err, 'Cannot add tiger to db');
+    throw err;
+  }
+}
+
+export async function addTigerSighting(context, sighting = {}) {
+  const knex = await KnexConnector(context);
+
+  context.logger.debug('Adding a new tiger sighting');
+
+  try {
+    knex.transaction(async trx => {
+      await knex('tiger_sightings').insert(sighting).transacting(trx);
+      await knex('tigers')
+        .update({ sighting_id: sighting.id })
+        .where('id', sighting.tiger_id)
+        .transacting(trx);
     });
   } catch (err) {
     context.logger.error(err, 'Cannot add tiger to db');
