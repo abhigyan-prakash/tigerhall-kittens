@@ -5,6 +5,7 @@ import { createRequestContext, handle404, handleErrors } from './middlewares';
 import router from '../routes';
 import KnexConnector from './knex_connector';
 import _ from 'lodash';
+import path from 'path';
 
 let staticContext = null;
 
@@ -29,6 +30,9 @@ export async function boot(options) {
 
   if (options.initExpress) {
     let app = express();
+
+    // handle static files
+    app.use(express.static(path.join(__dirname, '../public')));
 
     // Initialize the request context
     app.use(createRequestContext);

@@ -6,6 +6,7 @@ import {
 } from '../models/tiger';
 import _ from 'lodash';
 import uuid4 from 'uuid-random';
+import { getImagePath } from '../utils/image';
 
 export async function getTigerList(context) {
   const tigers = await fetchAllTigers(context, 'desc');
@@ -22,7 +23,7 @@ export async function getTigerList(context) {
           lat: tiger.seen_cord_lat,
           lng: tiger.seen_cord_lng
         },
-        image: tiger.image
+        image: getImagePath(context, tiger.image)
       });
     }
   }
@@ -47,7 +48,7 @@ export async function getTigerSightingsById(context, tigerId) {
         lat: sighting.seen_cord_lat,
         lng: sighting.seen_cord_lng
       },
-      image: sighting.image
+      image: getImagePath(context, sighting.image)
     });
   }
 

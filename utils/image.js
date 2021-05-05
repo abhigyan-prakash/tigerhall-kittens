@@ -10,6 +10,9 @@ export async function saveImage(context, image) {
   try {
     // Check if destination exists; if not create it
     if (!fs.existsSync(destDir)) {
+      context.logger.debug(
+        `Destination directory does not exist: ${destDir}, creating it`
+      );
       fs.mkdirSync(destDir, { recursive: true });
     }
 
@@ -19,4 +22,13 @@ export async function saveImage(context, image) {
     context.logger.error(err, `Could not remove temp file`);
     throw err;
   }
+}
+
+export function getImagePath(context, imageName) {
+  context.logger.debug(`Generating image path for image: ${imageName}`);
+
+  let uploadImagePath = getConfig('upload.image.path');
+  let imagePath = `${uploadImagePath}/${imageName}`;
+
+  return imagePath.replace('\\', '/');
 }
