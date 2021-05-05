@@ -42,11 +42,11 @@ export async function boot(options) {
       return process.exit(9);
     }
 
-    // handle errors
-    app.use(handleErrors);
-
     // Reply with 404 for unmatched routes
     app.use('*', handle404);
+
+    // handle errors
+    app.use(handleErrors);
 
     // Start server listening
     let server = app.listen(port);
