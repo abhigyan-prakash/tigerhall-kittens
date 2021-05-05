@@ -12,8 +12,8 @@ export function seed(knex) {
           id: tigerIds[i].sightingId,
           tiger_id: tigerIds[i].id,
           seen_at: faker.date.recent(),
-          seen_cord_lat: faker.address.longitude(),
-          seen_cord_lng: faker.address.latitude(),
+          seen_cord_lat: faker.address.latitude(),
+          seen_cord_lng: faker.address.longitude(),
           image: faker.image.imageUrl()
         });
       }

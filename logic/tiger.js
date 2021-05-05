@@ -90,10 +90,10 @@ export async function createTiger(context, tigerData = {}) {
     },
     sighting: {
       id: sightingId,
-      tigerId: tigerId,
-      seen_at: tigerData.lastSeenAt,
-      seen_cord_lat: tigerData.seenCord.lat,
-      seen_cord_lng: tigerData.seenCord.lng,
+      tiger_id: tigerId,
+      seen_at: new Date(tigerData.lastSeenAt),
+      seen_cord_lat: tigerData.lat,
+      seen_cord_lng: tigerData.lng,
       image: tigerData.image
     }
   });

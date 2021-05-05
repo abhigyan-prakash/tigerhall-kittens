@@ -21,3 +21,4 @@ nodejs/reports/
 node_modules/
 .npm/
 .vscode/
+public/

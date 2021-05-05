@@ -11,3 +11,7 @@ listen:
     port: 3001
     keep_alive_timeout_seconds: 90
     headers_timeout_seconds: 120
+
+upload:
+  image:
+    dir: /public/image
