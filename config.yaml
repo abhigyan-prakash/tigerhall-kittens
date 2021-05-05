@@ -16,6 +16,9 @@ upload:
   image:
     dir: /public/image
     path: /image
+    resize:
+      dir: /public/image/resized
+      path: /image/resized
 
 sighting:
   radius_in_km: 5
