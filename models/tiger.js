@@ -18,3 +18,23 @@ export async function fetchAllTigers(context, lastSeen = 'desc') {
 
   return tigers;
 }
+
+export async function fetchTigerSightings(context, tigerId) {
+  const knex = await KnexConnector(context);
+
+  context.logger.debug('Fetching all sightings of the tiger');
+
+  let sightings = [];
+  try {
+    sightings = await knex
+      .select()
+      .from('tiger_sightings')
+      .where('tiger_id', tigerId)
+      .orderBy('seen_at', 'desc');
+  } catch (err) {
+    context.logger.error(err, 'Could not fetch sightings of the tiger');
+    throw err;
+  }
+
+  return sightings;
+}

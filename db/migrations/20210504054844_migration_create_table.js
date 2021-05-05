@@ -11,8 +11,8 @@ export function up(knex) {
     .createTable('tiger_sightings', table => {
       table.uuid('id').primary();
       table.uuid('tiger_id').notNullable();
-      table.timestamp('last_seen_at').defaultTo(knex.fn.now());
-      table.specificType('last_seen', 'Point');
+      table.timestamp('seen_at').defaultTo(knex.fn.now());
+      table.specificType('seen_cord', 'Point');
       table.string('image', 1000).nullable();
       table.timestamp('created_at').defaultTo(knex.fn.now());
       table.timestamp('updated_at').defaultTo(knex.fn.now());
