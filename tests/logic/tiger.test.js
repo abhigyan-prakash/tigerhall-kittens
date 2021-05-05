@@ -2,9 +2,11 @@ import CallContext from '../../boot/call_context';
 import {
   getTigerList,
   getTigerSightingsById,
-  getTigerByName
+  getTigerByName,
+  createTiger
 } from '../../logic/tiger';
 import {
+  addTiger,
   fetchAllTigers,
   fetchTiger,
   fetchTigerSightings
@@ -209,6 +211,40 @@ describe('logic - tiger', () => {
         name: 'mock name',
         dateOfBirth: '2020-04-08T00:00:00.000Z'
       });
+    });
+  });
+
+  describe('test createTiger', () => {
+    let mockTigerData = {
+      name: 'mock name',
+      date_of_birth: '2020-04-08T00:00:00.000Z',
+      lastSeenAt: '2021-05-04T10:44:49.000Z',
+      seenCord: { lat: -13.0057, lng: 178.8237 },
+      image: 'http://mockimage'
+    };
+
+    test('create tiger - no tiger data provided', async () => {
+      let result = await createTiger(testContext);
+      expect(result).toEqual(false);
+    });
+
+    test('create tiger - throws error', async () => {
+      addTiger.mockImplementation(() => {
+        throw new Error('mock error');
+      });
+
+      try {
+        let result = await createTiger(testContext, mockTigerData);
+      } catch (err) {
+        expect(err).toBeDefined();
+      }
+    });
+
+    test('create tiger - successful', async () => {
+      addTiger.mockImplementation(() => {});
+
+      let result = await createTiger(testContext, mockTigerData);
+      expect(result).toEqual(true);
     });
   });
 });

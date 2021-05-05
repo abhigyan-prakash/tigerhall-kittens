@@ -61,7 +61,10 @@ export async function addTiger(context, tigerData = {}) {
   context.logger.debug('Adding a new tiger');
 
   try {
-    await knex.insert(tigerData).into('tigers');
+    knex.transaction(async trx => {
+      await knex('tigers').insert(tigerData.tiger).transacting(trx);
+      await knex('tiger_sightings').insert(tigerData.sighting).transacting(trx);
+    });
   } catch (err) {
     context.logger.error(err, 'Cannot add tiger to db');
     throw err;
