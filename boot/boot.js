@@ -1,7 +1,7 @@
 import express from 'express';
 import CallContextStatic from './call_context_static';
 import { parseConfig, getConfig } from './config';
-import { createRequestContext, handle404 } from './middlewares';
+import { createRequestContext, handle404, handleErrors } from './middlewares';
 import router from '../routes';
 import KnexConnector from './knex_connector';
 import _ from 'lodash';
@@ -42,7 +42,10 @@ export async function boot(options) {
       return process.exit(9);
     }
 
-    // Reply with 404 for unmatches routes
+    // handle errors
+    app.use(handleErrors);
+
+    // Reply with 404 for unmatched routes
     app.use('*', handle404);
 
     // Start server listening

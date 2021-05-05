@@ -1,6 +1,7 @@
 import { HEADER_CORRELATIONID } from './defines';
 import uuid4 from 'uuid-random';
 import CallContext from './call_context';
+import { GeneralError } from './errors';
 
 /**
  * Middleware that creates the request context and sets it on the request
@@ -34,6 +35,22 @@ export async function createRequestContext(request, response, next) {
   request.context.logger.trace(request);
 
   next();
+}
+
+export function handleErrors(error, request, response, next) {
+  request.context.logger.error(error);
+
+  if (error instanceof GeneralError) {
+    return response.status(error.getCode()).json({
+      status: 'error',
+      message: error.message
+    });
+  }
+
+  return response.status(500).json({
+    status: 'error',
+    message: error.message
+  });
 }
 
 /**
