@@ -11,11 +11,9 @@ export function seed(knex) {
         rows.push({
           id: tigerIds[i].sightingId,
           tiger_id: tigerIds[i].id,
-          last_seen_at: faker.date.recent(),
-          last_seen: knex.raw('POINT(?, ?)', [
-            faker.address.longitude(),
-            faker.address.latitude()
-          ]),
+          seen_at: faker.date.recent(),
+          seen_cord_lat: faker.address.longitude(),
+          seen_cord_lng: faker.address.latitude(),
           image: faker.image.imageUrl()
         });
       }

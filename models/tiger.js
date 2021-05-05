@@ -22,7 +22,7 @@ export async function fetchAllTigers(context, lastSeen = 'desc') {
 export async function fetchTigerSightings(context, tigerId) {
   const knex = await KnexConnector(context);
 
-  context.logger.debug('Fetching all sightings of the tiger');
+  context.logger.debug(`Fetching all sightings of the tiger: ${tigerId}`);
 
   let sightings = [];
   try {
@@ -39,8 +39,10 @@ export async function fetchTigerSightings(context, tigerId) {
   return sightings;
 }
 
-export async function fetchTiger(name) {
+export async function fetchTiger(context, name) {
   const knex = await KnexConnector(context);
+
+  context.logger.debug(`Fetching tiger by name: ${name}`);
 
   let tiger;
   try {
@@ -57,4 +59,11 @@ export async function addTiger(context, tigerData = {}) {
   const knex = await KnexConnector(context);
 
   context.logger.debug('Adding a new tiger');
+
+  try {
+    await knex.insert(tigerData).into('tigers');
+  } catch (err) {
+    context.logger.error(err, 'Cannot add tiger to db');
+    throw err;
+  }
 }

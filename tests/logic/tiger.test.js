@@ -32,7 +32,8 @@ describe('logic - tiger', () => {
             updated_at: '2021-05-04T22:37:43.000Z',
             tiger_id: 'mock tiger id 1',
             seen_at: '2021-05-04T10:44:49.000Z',
-            seen_cord: { x: -22.015, y: 79.1234 },
+            seen_cord_lng: -22.015,
+            seen_cord_lat: 79.1234,
             image: 'http://mockimage1'
           },
           {
@@ -44,7 +45,8 @@ describe('logic - tiger', () => {
             updated_at: '2021-05-04T22:37:43.000Z',
             tiger_id: 'mock tiger id 2',
             seen_at: '2021-05-04T10:49:42.000Z',
-            seen_cord: { x: 178.8237, y: -13.0057 },
+            seen_cord_lng: 178.8237,
+            seen_cord_lat: -13.0057,
             image: 'http://mockimage2'
           }
         ];
@@ -103,7 +105,8 @@ describe('logic - tiger', () => {
             updated_at: '2021-05-04T22:37:43.000Z',
             tiger_id: 'mock tiger id 1',
             seen_at: '2021-05-04T10:44:49.000Z',
-            seen_cord: { x: -22.015, y: 79.1234 },
+            seen_cord_lng: -22.015,
+            seen_cord_lat: 79.1234,
             image: 'http://mockimage1'
           },
           {
@@ -112,7 +115,8 @@ describe('logic - tiger', () => {
             updated_at: '2021-05-04T22:37:43.000Z',
             tiger_id: 'mock tiger id 1',
             seen_at: '2021-05-04T10:49:42.000Z',
-            seen_cord: { x: 178.8237, y: -13.0057 },
+            seen_cord_lng: 178.8237,
+            seen_cord_lat: -13.0057,
             image: 'http://mockimage2'
           }
         ];
@@ -185,6 +189,26 @@ describe('logic - tiger', () => {
       } catch (err) {
         expect(err).toBeDefined();
       }
+    });
+
+    test('get tiger - fetches tiger by name', async () => {
+      fetchTiger.mockImplementation(() => {
+        return {
+          id: 'mock tiger id',
+          sighting_id: 'mock sighting id',
+          name: 'mock name',
+          date_of_birth: '2020-04-08T00:00:00.000Z',
+          created_at: '2021-05-04T22:37:43.000Z',
+          updated_at: '2021-05-04T22:37:43.000Z'
+        };
+      });
+
+      let result = await getTigerByName(testContext, mockTigerName);
+      expect(result).toEqual({
+        id: 'mock tiger id',
+        name: 'mock name',
+        dateOfBirth: '2020-04-08T00:00:00.000Z'
+      });
     });
   });
 });
