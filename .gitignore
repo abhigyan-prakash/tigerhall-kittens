@@ -2,8 +2,8 @@
 ._*
 ava.config.local.*
 *.code-workspace
-!creds.sample.yaml
 creds*.yaml
+!creds.sample.yaml
 .DS_Store
 .eslintcache
 .node_repl_history

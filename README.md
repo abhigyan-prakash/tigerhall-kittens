@@ -2,11 +2,23 @@
 
 APIs to add sightings of the tigers in the wild.
 
+## Database
+
+Create `creds.yaml` file and add contents from `creds.sample.yaml`
+
+<br/>
+
 ## Installation
 
 ```sh
 $ npm install
 $ npm run knex migrate:latest
+```
+
+## Run
+
+```sh
+$ npm run start
 ```
 
 ## APIs
